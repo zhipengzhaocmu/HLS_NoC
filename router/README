@@ -1,0 +1,98 @@
+Copyright (c) <2017> <Zhipeng Zhao, Carnegie Mellon university>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-----------------------
+  File Information
+-----------------------
+Date created:	02-21-2017
+Last modified:	02-22-2017
+Authors:        Zhipeng Zhao <zzhao1@andrew.cmu.edu>
+
+-----------------------
+  General Description
+-----------------------
+This project offers Vivado-HLS C++ source code for CONNECT fully 
+parameterized router REPLACEMENTS and supporting scripts.
+
+
+-----------------------
+  Steps
+----------------------- 
+1. Generate a NoC from CONNECT website(www.ece.cmu.edu/calcm/connect).
+
+2. Download the generated NoC and untar it. Move the 'build' directory 
+   to current directory.
+   
+3. run "./run.sh". The router C++ code will be synthesized into 
+   verilog by Vivado-HLS. The original CONNECT network level will be 
+   kept, while the router module will be replaced by the HLS-generated 
+   router module. This test will run the CONNECT-provided bare bones
+   testbench. The working directory is 'build_hls'. 
+
+	
+-----------------------
+  Files Description
+----------------------- 	
+arbiter.h - Arbiter object. Input and Output is a SIZE-width Vector. 
+            Only one of the SIZE requests is granted. 
+
+alloc.h - Allocator object, containing two stage of arbiters. The 
+          Input is a N-M matrix, Output is a M-N matrix.
+
+flit_buffer.h - Buffer object. Buffer the incoming flits. 
+
+router.h - Router object, containing buffers and allocator. Forward
+           the incoming flits to proper output port while resovling 
+           their potential conflicts.
+		 
+router_class.cpp - The top-level function to be synthesized into 
+                   router module. Vivado-HLS required that the 
+                   top-level must be a function.
+			 
+para.h - Parameters and datatypes.
+
+run.sh - The main scripts. (1) Update the para.h based on CONNECT 
+         parameters. (2) Create working directory 'build_hls' and 
+         copy necessary verilog code from 'build' into it. (3)
+         Generate proper wrapper according to router and flow 
+         control type. (4) Run Vivado-HLS and copy HLS-generated 
+         router module verilog code into 'build_hls'. (4) Run 
+         CONNECT-provided bare bones testbench.
+		 
+update_para.py - Update para.h based on connect_parameters.v 
+                 provided by CONNECT. Create 'config' for generating
+                 wrappers. 
+				 
+gen_iq_wrapper.py - Generate wrapper for IQ Router (router_type: iq;
+                    flow_control_type: credit). 
+
+gen_iqsimple_wrapper.py - Generate wrapper for IQSimple Router 
+                          (router_type: iq; flow_control_type: peek). 	
+
+gen_vc_wrapper.py - Generate wrapper for VC Router (router_type: vc;
+                    flow_control_type: credit). 	
+
+gen_vc_simplewrapper.py - Generate wrapper for VCSimple Router 
+                          (router_type: vc; flow_control_type: peek). 						
+						  
+gen_voqsimple_wrapper.py - Generate wrapper for VOQSimple Router 
+                           (router_type: voq; flow_control_type: peek). 
+
+vivado_hls.tcl - Tcl script for running Vivado-HLS C-Synthesize. 						   
