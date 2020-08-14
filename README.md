@@ -30,7 +30,7 @@ VCS simulator - The default RTL simulation tool used by our script. However, one
 **gen_vc_simplewrapper.py** - Generate wrapper for VCSimple Router (router_type: vc; flow_control_type: peek). <br />
 **gen_voqsimple_wrapper.py** - Generate wrapper for VOQSimple Router (router_type: voq; flow_control_type: peek). <br />
 **vivado_hls.tcl** - Tcl script for running Vivado-HLS C-Synthesize. <br />
-**run.sh** - The main scripts. 
+**run.sh** - The main script that includes the following steps
 - Update the `para.h` based on CONNECT parameters. 
 - Create working directory `build_hls` and copy necessary verilog code from `build` into it. 
 - Generate proper wrapper according to router and flow control type. 
