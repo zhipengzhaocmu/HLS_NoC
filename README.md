@@ -7,7 +7,7 @@ For more details, please see our technical report, poster and source code. The t
 This project offers Vivado-HLS C++ source code for CONNECT fully parameterized router REPLACEMENTS and supporting scripts.
 
 # Prerequisite tools
-Vivado-HLS - Compile the C++ source code to RTL. <br />
+Vivado-HLS 15.2 - Compile the C++ source code to RTL. Using other versions may not work. <br />
 VCS simulator - The default RTL simulation tool used by our script. However, one could use other RTL simulation tools. 
 
 ## Steps
